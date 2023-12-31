@@ -1,0 +1,54 @@
+''' Below are our established constants, loyalty membership means 5% discount on subtotal
+    and there is also discounts for buying in bulk (>10) at 10%. Also soup meals cost $5.50 
+    and tax is 4.5% 
+'''    
+
+loyalty = (1-0.05)
+bulk_dis = (1-0.1)
+meal = 5.50
+tax = (0.045)
+
+# While loop runs when user input is y for yes and ends when input is n for no
+while True:
+    print("Does customer need to be served?")
+    customer = input()
+    if customer.lower() == "y":
+        print("How many bowls would you like today?")
+        num_meal = int(input())
+
+  # Price of number of meals with bulk discount applied
+        if num_meal >= 10:
+            bulk_price = (num_meal * meal) * bulk_dis 
+            print(f'Subtotal is ${bulk_price}')
+            print("Are you part of the loyalty club?")
+            loyal_mem = input()
+
+    # Finding subtotal for bulk purchase and loyalty membership with nested if statement
+            if loyal_mem.lower() == "y":
+                loyal_bulk = (bulk_price * loyalty)
+                sl_bulk = loyal_bulk + (loyal_bulk * tax) # subtotal for loyalty members buying bulk
+                print(f'Your total wit tax is ${sl_bulk}')
+            elif loyal_mem.lower() =="n":
+               sub_bulk = bulk_price + (bulk_price*tax) # subtotal for bulk non loyalty members
+               print( f'Your total with tax is $ {sub_bulk}')
+            continue
+
+# Below is same as above but we are applying this to customers that don't have loyalty membership
+        elif num_meal < 10:
+            reg_price = num_meal * meal
+            print(f'Subtotal is ${reg_price}')
+            print("Are you part of the loyalty club?")
+            loyal_mem = input()
+            
+            if loyal_mem.lower() =="y":
+                loyal_reg = (reg_price*loyalty) # subtotal for loyalty members without tax. Not buying bulk
+                sl_reg = loyal_reg + (loyal_reg*tax) # final subtotal for loyalty members not buying bulk
+                print (f"Your total with tax is ${sl_reg}")
+            elif loyal_mem == "n":
+                sub_reg = reg_price + (reg_price*tax) #subtotal for non bulk purchase and not a loyalty member
+                print (f"Your total with tax is ${sub_reg}")
+            continue
+    elif customer.lower() =='n':
+        print("No more customers for now!")
+        break
+    
